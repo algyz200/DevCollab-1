@@ -48,6 +48,25 @@ class TeamsRepository extends ServiceEntityRepository
         return $query->getQuery()->getArrayResult();
     }
 
+    /**
+     * @param int $id
+     * @return array
+     */
+    public function getAllTeamInfo(int $id): array
+    {
+        $query = $this->createQueryBuilder('teams');
+        $query
+            ->select('teams.name','users.id'
+            )
+            ->innerJoin('teams.users','users')
+            ->where('teams.id = :identifier')
+            ->setParameter('identifier', $id)
+            ;
+
+        return $query->getQuery()->getArrayResult();
+    }
+
+
     // /**
     //  * @return Teams[] Returns an array of Teams objects
     //  */
